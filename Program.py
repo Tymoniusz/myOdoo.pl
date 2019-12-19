@@ -15,6 +15,9 @@ from tkinter import *
 from tkinter import messagebox
 import tkinter as tk
 
+##import socket,sys To jest odpowiedź, ale jak? 
+
+
 def tylkocyfry(*a):
     global tx,pop_s
     s= tx.get()
@@ -25,9 +28,26 @@ def tylkocyfry(*a):
 
 def start():
     global tx
-    Ok = False
     wyjscie = tx.get()
-    messagebox.showinfo("Sukces",wyjscie)
+    liczba = float(wyjscie)
+    zmienna = 0.79889
+    messagebox.showinfo("Sukces",liczba* zmienna)
+    x = 360 * zmienna
+    y = 360 - x
+
+    ok = tk.Tk()
+    ok.title("Wykres")
+    c = Canvas(ok, width=400, height=400, bg='white')
+    c.create_text(280,160,text=("Brutto "+ str(int(liczba-(liczba*zmienna)))+"zł"),font=("Arial","10","bold"),justify=CENTER,fill='grey')
+    c.create_text(160,160,text=("Netto "+ str(int(liczba*zmienna))+"zł"),font=("Arial","10","bold"),justify=CENTER,fill='grey')
+    c.create_arc(10,10,380,380,outline='black',width=5,style=PIESLICE,start=0,extent=y)
+    c.create_arc(10,10,380,380,outline='red',width=5,style=ARC,start=0,extent=359)
+    b = Button(ok, text="Zamknij", command=ok.destroy)
+    c.grid(row=0)
+    b.grid(row=1)
+    ok.mainloop()
+
+    
 
 o = tk.Tk()
 o.geometry("310x50")
